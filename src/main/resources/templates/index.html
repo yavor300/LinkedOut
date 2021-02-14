@@ -11,7 +11,7 @@
                 <div class="justify-content-center">
                     <h1>Welcome to LinkedOut Application</h1>
                 </div>
-                <div>Last update of Database: {Current date and time}</div>
+                <div th:if="${session.recentlyUpdated != null}" th:text="|Last update of Database: ${session.recentlyUpdated.toString()}|"></div>
 
             </main>
         </div>

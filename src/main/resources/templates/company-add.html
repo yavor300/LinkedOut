@@ -9,35 +9,34 @@
         <div class="justify-content-center">
             <h1>Add Company</h1>
         </div>
-        <form class="m-md-auto w-50 text-center" th:method="POST" th:action="@{/companies/add}">
+        <form class="m-md-auto w-50 text-center" th:method="POST" th:action="@{/companies/add}" th:object="${companyAddBindingModel}">
+            <small th:unless="${isAdded}" class="text-danger">Company with that name already exists.</small>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control text-center" id="name" aria-describedby="nameHelp" 
+                <input th:field="*{name}" th:errorclass="bg-danger" type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
 				name="name"/>
-                <small>Error message</small>
+                <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
             </div>
-
             <div class="form-group">
                 <label for="town">Town</label>
-                <input type="text" class="form-control text-center" id="town" aria-describedby="town" 
+                <input th:field="*{town}" th:errorclass="bg-danger" type="text" class="form-control text-center" id="town" aria-describedby="town"
 				name="town"/>
-                <small>Error message</small>
+                <small th:if="${#fields.hasErrors('town')}" th:errors="*{town}"></small>
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control text-center" 
+                <input th:field="*{description}" th:errorclass="bg-danger" type="text" class="form-control text-center"
 				id="description" aria-describedby="description" name="description"/>
-                <small>Error message</small>
+                <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
             </div>
 
             <div class="form-group">
                 <label for="budget">Budget</label>
-                <input type="number" min="0" class="form-control text-center" 
+                <input th:field="*{budget}" th:errorclass="bg-danger" type="number" min="0" class="form-control text-center"
 				id="budget" aria-describedby="town" name="budget"/>
-                <small>Budget</small>
+                <small th:if="${#fields.hasErrors('budget')}" th:errors="*{budget}"></small>
             </div>
-
             <button type="submit" class="btn btn-secondary">Add Company</button>
         </form>
     </main>
