@@ -10,6 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -32,5 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
 
         return modelMapper.map(employeeRepository.saveAndFlush(modelMapper.map(employeeServiceModel, Employee.class)), EmployeeServiceModel.class);
+    }
+
+    @Override
+    public List<EmployeeServiceModel> findAll() {
+        return employeeRepository.findAll().stream()
+                .map(employee -> modelMapper.map(employee, EmployeeServiceModel.class))
+                .collect(Collectors.toList());
     }
 }

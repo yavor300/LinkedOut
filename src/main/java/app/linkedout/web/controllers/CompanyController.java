@@ -2,6 +2,8 @@ package app.linkedout.web.controllers;
 
 import app.linkedout.domain.models.binding.CompanyAddBindingModel;
 import app.linkedout.domain.models.service.CompanyServiceModel;
+import app.linkedout.domain.models.view.CompanyAddEmployeeViewModel;
+import app.linkedout.domain.models.view.CompanyAllViewModel;
 import app.linkedout.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/companies")
@@ -61,5 +64,13 @@ public class CompanyController {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         return "redirect:/";
+    }
+
+    @GetMapping("/all")
+    public String all(Model model) {
+        model.addAttribute("companies", companyService.findAll().stream()
+                .map(companyServiceModel -> modelMapper.map(companyServiceModel, CompanyAllViewModel.class))
+                .collect(Collectors.toList()));
+        return "company-all";
     }
 }

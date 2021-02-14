@@ -3,6 +3,8 @@ package app.linkedout.web.controllers;
 import app.linkedout.domain.models.binding.EmployeeAddBindingModel;
 import app.linkedout.domain.models.service.EmployeeServiceModel;
 import app.linkedout.domain.models.view.CompanyAddEmployeeViewModel;
+import app.linkedout.domain.models.view.CompanyAllViewModel;
+import app.linkedout.domain.models.view.EmployeeAllViewModel;
 import app.linkedout.service.CompanyService;
 import app.linkedout.service.EmployeeService;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Controller
@@ -64,5 +67,17 @@ public class EmployeeController {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         return "redirect:/";
+    }
+
+    @GetMapping("/all")
+    public String all(Model model) {
+        model.addAttribute("employees", employeeService.findAll().stream()
+                .map(employeeServiceModel -> {
+                    EmployeeAllViewModel employeeAllViewModel = modelMapper.map(employeeServiceModel, EmployeeAllViewModel.class);
+                    employeeAllViewModel.setBirthday(employeeServiceModel.getBirthday().format(DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.US)));
+                    return employeeAllViewModel;
+                })
+                .collect(Collectors.toList()));
+        return "employee-all";
     }
 }
