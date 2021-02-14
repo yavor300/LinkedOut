@@ -1,13 +1,11 @@
 package app.linkedout.domain.entities;
 
+import app.linkedout.domain.entities.enums.EducationalLevelEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -20,7 +18,8 @@ public class Employee extends BaseEntity {
     @Column(nullable = false)
     private LocalDate birthday;
     @Column(nullable = false, name = "education_level")
-    private String educationLevel;
+    @Enumerated(EnumType.STRING)
+    private EducationalLevelEnum educationLevel;
     @Column(nullable = false, name = "first_name")
     private String firstName;
     @Column(name = "job_title", nullable = false)

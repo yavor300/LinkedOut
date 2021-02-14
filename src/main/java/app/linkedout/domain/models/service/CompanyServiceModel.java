@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class CompanyServiceModel {
+    private String id;
     private BigDecimal budget;
     private String description;
     private String name;

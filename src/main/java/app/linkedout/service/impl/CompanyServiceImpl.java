@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
@@ -29,5 +32,17 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
 
         return true;
+    }
+
+    @Override
+    public List<CompanyServiceModel> findAll() {
+        return companyRepository.findAll()
+                .stream().map(c -> modelMapper.map(c, CompanyServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CompanyServiceModel getByName(String name) {
+       return modelMapper.map(companyRepository.findByName(name).get(), CompanyServiceModel.class);
     }
 }
