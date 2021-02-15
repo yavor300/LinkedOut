@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "companies")
@@ -23,4 +22,6 @@ public class Company extends BaseEntity {
     private String name;
     @Column(nullable = false)
     private String town;
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private List<Employee> employees;
 }

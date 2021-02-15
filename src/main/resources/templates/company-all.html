@@ -8,7 +8,7 @@
         <h2 class="text-center text-dark bg-light rounded-circle mt-5">All companies</h2>
         <hr style="width: 50%"/>
         <div class='row mb-4 d-flex justify-content-around'>
-            <div th:each="c : ${companies}" th:object="${c}"
+            <div th:if="${companies.size() != 0}" th:each="c : ${companies}" th:object="${c}"
                  class="col-md-4 d-flex flex-column bg-text mb-3 rounded-circle">
                 <h2 th:text="|Company: *{name}|"></h2>
                 <h4 th:text="|Town: *{town}|"></h4>

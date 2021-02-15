@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EmployeeAllViewModel {
+public class CompanyDetailsViewModel {
     private String id;
-    private String birthday;
-    private String firstName;
-    private String jobTitle;
-    private String lastName;
+    private String description;
+    private String name;
+    private String town;
+    private String budget;
 }

@@ -11,4 +11,8 @@ public interface CompanyService {
     List<CompanyServiceModel> findAll();
 
     CompanyServiceModel getByName(String name);
+
+    CompanyServiceModel findById(String id);
+
+    void deleteById(String id);
 }

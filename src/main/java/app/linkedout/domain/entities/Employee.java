@@ -29,5 +29,6 @@ public class Employee extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal salary;
     @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
 }
