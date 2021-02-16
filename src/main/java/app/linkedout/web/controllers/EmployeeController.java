@@ -2,9 +2,7 @@ package app.linkedout.web.controllers;
 
 import app.linkedout.domain.models.binding.EmployeeAddBindingModel;
 import app.linkedout.domain.models.service.EmployeeServiceModel;
-import app.linkedout.domain.models.view.CompanyAddEmployeeViewModel;
-import app.linkedout.domain.models.view.CompanyAllViewModel;
-import app.linkedout.domain.models.view.EmployeeAllViewModel;
+import app.linkedout.domain.models.view.*;
 import app.linkedout.service.CompanyService;
 import app.linkedout.service.EmployeeService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -79,5 +78,19 @@ public class EmployeeController {
                 })
                 .collect(Collectors.toList()));
         return "employee-all";
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable String id, Model model) {
+        model.addAttribute("employee", modelMapper.map(employeeService.findById(id), EmployeeDetailsViewModel.class));
+        return "employee-details";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable String id, HttpSession httpSession) {
+        employeeService.deleteById(id);
+        httpSession.setAttribute("recentlyUpdated", LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        return "redirect:/";
     }
 }

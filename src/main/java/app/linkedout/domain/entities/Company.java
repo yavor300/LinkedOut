@@ -22,6 +22,6 @@ public class Company extends BaseEntity {
     private String name;
     @Column(nullable = false)
     private String town;
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Employee> employees;
 }

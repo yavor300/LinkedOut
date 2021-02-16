@@ -43,4 +43,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(employee -> modelMapper.map(employee, EmployeeServiceModel.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public EmployeeServiceModel findById(String id) {
+        return modelMapper.map(employeeRepository.findById(id).get(), EmployeeServiceModel.class);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        employeeRepository.deleteById(id);
+    }
 }

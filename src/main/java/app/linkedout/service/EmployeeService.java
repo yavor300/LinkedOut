@@ -9,4 +9,8 @@ public interface EmployeeService {
     EmployeeServiceModel add(EmployeeServiceModel employeeServiceModel);
 
     List<EmployeeServiceModel> findAll();
+
+    EmployeeServiceModel findById(String id);
+
+    void deleteById(String id);
 }
